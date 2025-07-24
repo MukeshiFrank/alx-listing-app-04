@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import PropertyDetail from "@/components/property/PropertyDetail";
+import ReviewSection from "@/components/property/ReviewSection";
 
 export default function PropertyDetailPage() {
   const router = useRouter();
@@ -30,8 +31,16 @@ export default function PropertyDetailPage() {
   }, [id]);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!property) return <p>Property not found.</p>;
 
-  return <PropertyDetail property={property} />;
+  return (
+    <div style={{ padding: "20px" }}>
+      {/* ✅ Display property details */}
+      <PropertyDetail property={property} />
+
+      {/* ✅ Display reviews dynamically */}
+      <ReviewSection propertyId={id as string} />
+    </div>
+  );
 }
